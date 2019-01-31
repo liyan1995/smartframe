@@ -6,7 +6,7 @@
 
     <groupId>cn.liyan</groupId>
     <artifactId>smart-framework</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <dependencies>
         <!--Servlet-->
@@ -73,5 +73,10 @@
             <version>2.9.4</version>
         </dependency>
     </dependencies>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 
 </project>
