@@ -71,7 +71,6 @@ public class DispatcherServlet extends HttpServlet {
                     }
                 }
             }
-            Param param = new Param(paramMap);
             Method actionMethod = handler.getActionMethod();
             List<Object> list=new ArrayList<>(paramMap.values());
             Object result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, list.toArray());

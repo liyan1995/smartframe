@@ -33,7 +33,7 @@ public final class ClassUtil {
     /**
      * load class
      *
-     * @param className class name
+     * @param className     class name
      * @param isInitialized true-init class{static{}}
      * @return class
      */
@@ -50,7 +50,7 @@ public final class ClassUtil {
 
     /**
      * get classes by package name
-     *
+     * <p>
      * note: getClassLoader().getResources(packageName.replace(".", "/")
      *
      * @param packageName package name
@@ -97,11 +97,9 @@ public final class ClassUtil {
     }
 
     private static void addClass(Set<Class<?>> classSet, String packagePath, String packageName) {
-        final File[] files = new File(packagePath).listFiles(new FileFilter() {
-            public boolean accept(File pathname) {
-                // 后缀为".class"的文件和目录
-                return (pathname.isFile() && pathname.getName().endsWith(".class")) || pathname.isDirectory();
-            }
+        final File[] files = new File(packagePath).listFiles(pathname -> {
+            // 后缀为".class"的文件和目录
+            return (pathname.isFile() && pathname.getName().endsWith(".class")) || pathname.isDirectory();
         });
         assert files != null;
         for (File file : files) {
@@ -130,5 +128,40 @@ public final class ClassUtil {
     private static void doAddClass(Set<Class<?>> classSet, String className) {
         Class<?> cls = loadClass(className, false);
         classSet.add(cls);
+    }
+
+    public static void main(String[] args) {
+        Set<Class<?>> classSet = new HashSet<Class<?>>();
+        try {
+            Enumeration<URL> urls = getClassLoader().getResources("cn.liyan.framework".replace(".","/"));
+            while (urls.hasMoreElements()) {
+                URL url=urls.nextElement();
+                if(url!=null){
+                    String protocol = url.getProtocol();
+                    if (protocol.equals("file")) {
+                        String packagePath = url.getPath().replaceAll("%20", "");
+                        addClass(classSet, packagePath, "cn.liyan.framework");
+                    } else if (protocol.equals("jar")) {
+                        JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
+                        if (jarURLConnection != null) {
+                            JarFile jarFile = jarURLConnection.getJarFile();
+                            if (jarFile != null) {
+                                Enumeration<JarEntry> jarEntries = jarFile.entries();
+                                while (jarEntries.hasMoreElements()) {
+                                    JarEntry jarEntry = jarEntries.nextElement();
+                                    String jarEntryName = jarEntry.getName();
+                                    if (jarEntryName.endsWith(".class")) {
+                                        String className = jarEntryName.substring(0, jarEntryName.lastIndexOf(".")).replaceAll("/", ".");
+                                        doAddClass(classSet, className);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
