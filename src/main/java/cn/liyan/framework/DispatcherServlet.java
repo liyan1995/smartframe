@@ -2,7 +2,6 @@ package cn.liyan.framework;
 
 import cn.liyan.framework.bean.Data;
 import cn.liyan.framework.bean.Handler;
-import cn.liyan.framework.bean.Param;
 import cn.liyan.framework.bean.View;
 import cn.liyan.framework.helper.BeanHelper;
 import cn.liyan.framework.helper.ConfigHelper;
@@ -26,7 +25,7 @@ import java.util.*;
 /**
  * create by YanL on 2019/1/10
  */
-@WebServlet(urlPatterns = "/*",loadOnStartup = 0)
+@WebServlet(urlPatterns = "/*", loadOnStartup = 0)
 public class DispatcherServlet extends HttpServlet {
 
     @Override
@@ -52,7 +51,7 @@ public class DispatcherServlet extends HttpServlet {
             Class<?> controllerClass = handler.getControllerClass();
             Object controllerBean = BeanHelper.getBean(controllerClass);
 
-            Map<String, Object> paramMap = new HashMap<String, Object>();
+            Map<String, Object> paramMap = new HashMap<>();
             Enumeration<String> paramNames = req.getParameterNames();
             while (paramNames.hasMoreElements()) {
                 String paramName = paramNames.nextElement();
@@ -72,7 +71,7 @@ public class DispatcherServlet extends HttpServlet {
                 }
             }
             Method actionMethod = handler.getActionMethod();
-            List<Object> list=new ArrayList<>(paramMap.values());
+            List<Object> list = new ArrayList<>(paramMap.values());
             Object result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, list.toArray());
             if (result instanceof View) {
                 View view = (View) result;

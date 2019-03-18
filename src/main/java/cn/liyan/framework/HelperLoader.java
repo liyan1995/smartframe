@@ -1,9 +1,6 @@
 package cn.liyan.framework;
 
-import cn.liyan.framework.helper.BeanHelper;
-import cn.liyan.framework.helper.ClassHelper;
-import cn.liyan.framework.helper.ControllerHelper;
-import cn.liyan.framework.helper.IocHelper;
+import cn.liyan.framework.helper.*;
 import cn.liyan.framework.util.ClassUtil;
 
 /**
@@ -12,7 +9,7 @@ import cn.liyan.framework.util.ClassUtil;
 public final class HelperLoader {
 
     public static void init() {
-        Class<?>[] classList = {ClassHelper.class, BeanHelper.class, IocHelper.class, ControllerHelper.class};
+        Class<?>[] classList = {ClassHelper.class, BeanHelper.class, AopHelper.class, IocHelper.class, ControllerHelper.class};
         for (Class<?> cls : classList) {
             ClassUtil.loadClass(cls.getName(), true);
         }
