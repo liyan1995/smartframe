@@ -8,6 +8,12 @@ import java.lang.reflect.Method;
 public class AspectProxy implements Proxy {
 
 
+    /**
+     * proxy execute
+     * @param proxyChain proxyChain
+     * @return
+     * @throws Throwable
+     */
     @Override
     public Object doProxy(ProxyChain proxyChain) throws Throwable {
         Object result = null;

@@ -5,5 +5,11 @@ package cn.liyan.framework.proxy;
  */
 public interface Proxy {
 
+    /**
+     * proxy execute
+     * @param proxyChain
+     * @return
+     * @throws Throwable
+     */
     Object doProxy(ProxyChain proxyChain) throws Throwable;
 }

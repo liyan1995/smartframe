@@ -19,6 +19,14 @@ public class ProxyChain {
     private List<Proxy> proxyList;
     private int proxyIndex = 0;
 
+    /**
+     * @param targetClass
+     * @param targetObject
+     * @param targetMethod
+     * @param methodProxy
+     * @param methodParams
+     * @param proxyList
+     */
     public ProxyChain(Class<?> targetClass, Object targetObject, Method targetMethod, MethodProxy methodProxy, Object[] methodParams, List<Proxy> proxyList) {
         this.targetClass = targetClass;
         this.targetObject = targetObject;

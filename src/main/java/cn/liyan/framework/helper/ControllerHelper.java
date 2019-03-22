@@ -20,7 +20,7 @@ public final class ControllerHelper {
      * Request(method(String),path(String)) ---mapping--- Handler(controllerClass(Class),actionMethod(Method))
      * like: GET:/hello ---mapping--- HelloController().hello()
      */
-    private static final Map<Request, Handler> ACTION_MAP = new HashMap<Request, Handler>();
+    private static final Map<Request, Handler> ACTION_MAP = new HashMap<>();
 
     /**
      * init ACTION_MAP container
